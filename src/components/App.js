@@ -1,8 +1,19 @@
+import { useEffect } from 'react';
+import useBeerStore from '../zustand/store';
+import { GlobalStyle } from './GlobalStyle';
+import { Layout } from './Layout.styled';
+import RecipesList from './RecipesList/RecipesList';
+
 function App() {
+  const fetch = useBeerStore(state => state.fetchRecipes);
+
+  useEffect(() => {
+    fetch();
+  }, [fetch]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        {/* <img src={logo} className="App-logo" alt="logo" /> */}
+    <>
+      <header>
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
@@ -15,7 +26,13 @@ function App() {
           Learn React
         </a>
       </header>
-    </div>
+      <main>
+        <Layout>
+          <RecipesList />
+        </Layout>
+      </main>
+      <GlobalStyle />
+    </>
   );
 }
 
