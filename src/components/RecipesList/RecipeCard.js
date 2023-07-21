@@ -1,8 +1,31 @@
+import useBeerStore from '../../zustand/store';
+
 import { RecipeItem } from './RecipesList.styled';
 
-const RecipeCard = ({ image_url, name }) => {
+const RecipeCard = ({ id, image_url, name }) => {
+  const selectedCard = useBeerStore(state => state.selectedCard);
+  const addSelectedCard = useBeerStore(state => state.addSelectedCard);
+  const removeFromSelectedCard = useBeerStore(
+    state => state.removeFromSelectedCard
+  );
+
+  const onHandleRightClick = event => {
+    event.preventDefault();
+    addSelectedCard(id);
+  };
+
+  const onHandleClick = () => {
+    removeFromSelectedCard(id);
+  };
+
   return (
-    <RecipeItem>
+    <RecipeItem
+      style={{
+        backgroundColor: selectedCard.includes(id) ? '#ADC9A6' : '#f3f7f2',
+      }}
+      onContextMenu={onHandleRightClick}
+      onClick={onHandleClick}
+    >
       <img src={image_url} alt="beer" width={100} loading="lazy" />
       <p>{name}</p>
     </RecipeItem>

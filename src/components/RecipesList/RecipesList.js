@@ -8,9 +8,10 @@ const RecipesList = () => {
 
   return (
     <List>
-      {recipes.map(({ id, ...props }) => (
-        <RecipeCard key={id} {...props} />
-      ))}
+      {recipes.map(
+        ({ id, ...props }, idx) =>
+          idx < 15 && <RecipeCard key={id} id={id} {...props} />
+      )}
     </List>
   );
 };
