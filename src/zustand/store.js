@@ -20,8 +20,20 @@ const useBeerStore = create()(
       },
       removeFromSelectedCard: id => {
         set(state => {
-          const idx = state.selectedCard.indexOf(id);
-          state.selectedCard.splice(idx, 1);
+          const { selectedCard } = state;
+
+          const filteredId = selectedCard.filter(item => item !== id);
+          return { selectedCard: filteredId };
+        });
+      },
+      deleteRecipes: () => {
+        set(state => {
+          const { recipes, selectedCard } = state;
+
+          const filteredRecipes = recipes.filter(
+            recipe => !selectedCard.includes(recipe.id)
+          );
+          return { recipes: filteredRecipes, selectedCard: [] };
         });
       },
     }))

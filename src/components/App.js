@@ -1,11 +1,14 @@
 import { useEffect } from 'react';
 import useBeerStore from '../zustand/store';
+
 import { GlobalStyle } from './GlobalStyle';
 import { Layout } from './Layout.styled';
 import RecipesList from './RecipesList/RecipesList';
+import DeleteBtn from './DeleteBtn/DeleteBtn';
 
 function App() {
   const fetch = useBeerStore(state => state.fetchRecipes);
+  const selectedCard = useBeerStore(state => state.selectedCard);
 
   useEffect(() => {
     fetch();
@@ -29,6 +32,7 @@ function App() {
       <main>
         <Layout>
           <RecipesList />
+          {selectedCard.length > 0 && <DeleteBtn />}
         </Layout>
       </main>
       <GlobalStyle />

@@ -11,11 +11,13 @@ const RecipeCard = ({ id, image_url, name }) => {
 
   const onHandleRightClick = event => {
     event.preventDefault();
-    addSelectedCard(id);
+    selectedCard.includes(id)
+      ? removeFromSelectedCard(id)
+      : addSelectedCard(id);
   };
 
   const onHandleClick = () => {
-    removeFromSelectedCard(id);
+    // ;
   };
 
   return (
