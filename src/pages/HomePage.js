@@ -4,7 +4,7 @@ import useBeerStore from '../zustand/store';
 
 import RecipesList from '../components/RecipesList/RecipesList';
 import DeleteBtn from '../components/DeleteBtn/DeleteBtn';
-import { HomeTitle } from './Pages.styled';
+import { HomeTitle } from './HomePages.styled';
 
 const Home = () => {
   const fetch = useBeerStore(state => state.fetchRecipes);

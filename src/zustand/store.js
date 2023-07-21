@@ -9,6 +9,7 @@ const useBeerStore = create()(
     immer(set => ({
       recipes: [],
       selectedCard: [],
+      selectedRecipe: {},
       fetchRecipes: async () => {
         set({ recipes: await fetchBeerRecipes() });
       },
@@ -34,6 +35,13 @@ const useBeerStore = create()(
             recipe => !selectedCard.includes(recipe.id)
           );
           return { recipes: filteredRecipes, selectedCard: [] };
+        });
+      },
+      getRecipeById: recipeId => {
+        set(state => {
+          const recipe = state.recipes.find(({ id }) => id === recipeId);
+
+          return { selectedRecipe: recipe };
         });
       },
     }))

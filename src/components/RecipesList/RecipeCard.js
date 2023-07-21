@@ -1,6 +1,8 @@
+import { Link, useLocation } from 'react-router-dom';
+
 import useBeerStore from '../../zustand/store';
 
-import { RecipeItem } from './RecipesList.styled';
+import { RecipeItem, CardWrap, Image, RecipeTitle } from './RecipesList.styled';
 
 const RecipeCard = ({ id, image_url, name }) => {
   const selectedCard = useBeerStore(state => state.selectedCard);
@@ -8,6 +10,8 @@ const RecipeCard = ({ id, image_url, name }) => {
   const removeFromSelectedCard = useBeerStore(
     state => state.removeFromSelectedCard
   );
+  const getRecipeById = useBeerStore(state => state.getRecipeById);
+  const location = useLocation();
 
   const onHandleRightClick = event => {
     event.preventDefault();
@@ -17,19 +21,24 @@ const RecipeCard = ({ id, image_url, name }) => {
   };
 
   const onHandleClick = () => {
-    // ;
+    getRecipeById(id);
   };
 
   return (
     <RecipeItem
       style={{
-        backgroundColor: selectedCard.includes(id) ? '#ADC9A6' : '#f3f7f2',
+        backgroundColor: selectedCard.includes(id) ? '#a6b7c9' : '#f2f3f7',
       }}
       onContextMenu={onHandleRightClick}
       onClick={onHandleClick}
     >
-      <img src={image_url} alt="beer" width={100} loading="lazy" />
-      <p>{name}</p>
+      {' '}
+      <Link to={`/${id}`} state={{ from: location }}>
+        <CardWrap>
+          <Image src={image_url} alt="beer" width={100} loading="lazy" />
+          <RecipeTitle>{name}</RecipeTitle>
+        </CardWrap>
+      </Link>
     </RecipeItem>
   );
 };
