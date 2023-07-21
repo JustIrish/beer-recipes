@@ -1,42 +1,28 @@
-import { useEffect } from 'react';
-import useBeerStore from '../zustand/store';
+import { Routes, Route } from 'react-router-dom';
+import { lazy } from 'react';
 
-import { GlobalStyle } from './GlobalStyle';
-import { Layout } from './Layout.styled';
-import RecipesList from './RecipesList/RecipesList';
-import DeleteBtn from './DeleteBtn/DeleteBtn';
+import SharedLayout from './SharedLayout/SharedLayout';
+
+const Home = lazy(() => import('../pages/HomePage'));
+const RecipeDetails = lazy(() => import('../pages/RecipeDetails'));
 
 function App() {
-  const fetch = useBeerStore(state => state.fetchRecipes);
-  const selectedCard = useBeerStore(state => state.selectedCard);
-
-  useEffect(() => {
-    fetch();
-  }, [fetch]);
-
   return (
-    <>
-      <header>
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-      <main>
-        <Layout>
-          <RecipesList />
-          {selectedCard.length > 0 && <DeleteBtn />}
-        </Layout>
-      </main>
-      <GlobalStyle />
-    </>
+    <Routes>
+      <Route path="/" element={<SharedLayout />}>
+        <Route index element={<Home />} />
+        <Route path="/:recipeId" element={<RecipeDetails />} />
+        <Route path="*" element={<Home />} />
+      </Route>
+    </Routes>
+    // <>
+
+    //   <main>
+    //     <RecipesList />
+    //     {selectedCard.length > 0 && <DeleteBtn />}
+    //   </main>
+    //   <GlobalStyle />
+    // </>
   );
 }
 
