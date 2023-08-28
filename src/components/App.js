@@ -15,14 +15,6 @@ function App() {
         <Route path="*" element={<Home />} />
       </Route>
     </Routes>
-    // <>
-
-    //   <main>
-    //     <RecipesList />
-    //     {selectedCard.length > 0 && <DeleteBtn />}
-    //   </main>
-    //   <GlobalStyle />
-    // </>
   );
 }
 
