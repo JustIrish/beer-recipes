@@ -1,4 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
+// import shallow from 'zustand/shallow';
 
 import useBeerStore from '../../zustand/store';
 
@@ -6,18 +7,15 @@ import { RecipeItem, CardWrap, Image, RecipeTitle } from './RecipesList.styled';
 
 const RecipeCard = ({ id, image_url, name }) => {
   const selectedCard = useBeerStore(state => state.selectedCard);
-  const addSelectedCard = useBeerStore(state => state.addSelectedCard);
-  const removeFromSelectedCard = useBeerStore(
-    state => state.removeFromSelectedCard
-  );
+  const toggleBeerCards = useBeerStore(state => state.toggleBeerCards);
   const getRecipeById = useBeerStore(state => state.getRecipeById);
+
   const location = useLocation();
 
   const onHandleRightClick = event => {
     event.preventDefault();
-    selectedCard.includes(id)
-      ? removeFromSelectedCard(id)
-      : addSelectedCard(id);
+
+    toggleBeerCards(id);
   };
 
   const onHandleClick = () => {

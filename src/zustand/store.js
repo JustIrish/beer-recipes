@@ -8,25 +8,35 @@ const useBeerStore = create()(
   devtools(
     immer(set => ({
       recipes: [],
+      loading: false,
+      error: null,
       selectedCard: [],
       selectedRecipe: {},
-      fetchRecipes: async () => {
-        set({ recipes: await fetchBeerRecipes() });
+      page: 1,
+      fetchRecipes: async page => {
+        set({ loading: true });
+        try {
+          set({ recipes: await fetchBeerRecipes(page) });
+        } catch (e) {
+          set({ error: e.massage });
+        } finally {
+          set({ loading: false });
+        }
       },
-      addSelectedCard: id => {
-        set(state => {
-          if (state.selectedCard.includes(id)) return;
-          state.selectedCard.push(id);
-        });
-      },
-      removeFromSelectedCard: id => {
-        set(state => {
-          const { selectedCard } = state;
 
-          const filteredId = selectedCard.filter(item => item !== id);
-          return { selectedCard: filteredId };
+      toggleBeerCards: id => {
+        set(state => {
+          if (state.selectedCard.includes(id)) {
+            const { selectedCard } = state;
+
+            const filteredId = selectedCard.filter(item => item !== id);
+            return { selectedCard: filteredId };
+          } else {
+            state.selectedCard.push(id);
+          }
         });
       },
+
       deleteRecipes: () => {
         set(state => {
           const { recipes, selectedCard } = state;

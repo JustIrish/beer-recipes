@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { toast } from 'react-hot-toast';
+// import { toast } from 'react-hot-toast';
 import useBeerStore from '../zustand/store';
 
 import RecipesList from '../components/RecipesList/RecipesList';
@@ -8,20 +8,18 @@ import { HomeTitle } from './HomePages.styled';
 
 const Home = () => {
   const fetch = useBeerStore(state => state.fetchRecipes);
-  const selectedCard = useBeerStore(state => state.selectedCard);
+  const page = useBeerStore(state => state.page);
+  const isSelectedCard = useBeerStore(state => state.selectedCard.length);
 
   useEffect(() => {
-    fetch().catch(error => {
-      console.log(`${error.name}: ${error.message}`);
-      toast.error('Sorry, something went wrong...');
-    });
-  }, [fetch]);
+    fetch(page);
+  }, [fetch, page]);
 
   return (
     <>
       <HomeTitle>Beer recipes</HomeTitle>
       <RecipesList />
-      {selectedCard.length > 0 && <DeleteBtn />}
+      {isSelectedCard && <DeleteBtn />}
     </>
   );
 };
