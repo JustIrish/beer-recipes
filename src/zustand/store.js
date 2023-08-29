@@ -23,6 +23,12 @@ const useBeerStore = create()(
           set({ loading: false });
         }
       },
+      // changePage: () => {
+      //   set(state => {
+      //     const nextPage = state.page + 1;
+      //     return { page: nextPage };
+      //   });
+      // },
 
       toggleBeerCards: id => {
         set(state => {
@@ -36,7 +42,12 @@ const useBeerStore = create()(
           }
         });
       },
-
+      lazyLoadBeer: () => {
+        set(state => {
+          const newRecipes = state.recipes.slice(5);
+          return { recipes: newRecipes };
+        });
+      },
       deleteRecipes: () => {
         set(state => {
           const { recipes, selectedCard } = state;
