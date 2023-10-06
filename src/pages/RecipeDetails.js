@@ -2,10 +2,12 @@ import { Link, useLocation } from 'react-router-dom';
 import { HiArrowLeft } from 'react-icons/hi';
 
 import useBeerStore from '../zustand/store';
+import { getSelectedRecipe } from '../zustand/selectors';
+
 import { Wrap, DescWrap } from './RecipesDetails.styles';
 
 const MovieDetails = () => {
-  const selectedRecipe = useBeerStore(state => state.selectedRecipe);
+  const selectedRecipe = useBeerStore(getSelectedRecipe);
 
   const location = useLocation();
   const backLinkHref = location.state?.from ?? '/';

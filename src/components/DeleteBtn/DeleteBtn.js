@@ -1,9 +1,10 @@
 import useBeerStore from '../../zustand/store';
+import { getDeleteRecipes } from '../../zustand/selectors';
 
 import { Btn } from './DeleteBtn.styled';
 
 const DeleteBtn = () => {
-  const deleteRecipes = useBeerStore(state => state.deleteRecipes);
+  const deleteRecipes = useBeerStore(getDeleteRecipes);
 
   const onBtnClick = () => {
     deleteRecipes();
