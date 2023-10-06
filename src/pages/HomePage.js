@@ -1,24 +1,31 @@
 import { useEffect } from 'react';
 // import { toast } from 'react-hot-toast';
 import useBeerStore from '../zustand/store';
+import {
+  getFetchRecipes,
+  getPage,
+  getRecipesLength,
+  getSelectedCardLength,
+} from '../zustand/selectors';
 
 import RecipesList from '../components/RecipesList/RecipesList';
 import DeleteBtn from '../components/DeleteBtn/DeleteBtn';
 import { HomeTitle } from './HomePages.styled';
 
 const Home = () => {
-  const fetch = useBeerStore(state => state.fetchRecipes);
-  const page = useBeerStore(state => state.page);
-  const isSelectedCard = useBeerStore(state => state.selectedCard.length);
+  const fetch = useBeerStore(getFetchRecipes);
+  const recipesLength = useBeerStore(getRecipesLength);
+  const page = useBeerStore(getPage);
+  const isSelectedCard = useBeerStore(getSelectedCardLength);
 
   useEffect(() => {
     fetch(page);
-  }, [fetch, page]);
+  }, []);
 
   return (
     <>
       <HomeTitle>Beer recipes</HomeTitle>
-      <RecipesList />
+      {recipesLength && <RecipesList />}
       {isSelectedCard && <DeleteBtn />}
     </>
   );

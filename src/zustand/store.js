@@ -16,20 +16,31 @@ const useBeerStore = create()(
       fetchRecipes: async page => {
         set({ loading: true });
         try {
-          set({ recipes: await fetchBeerRecipes(page) });
+          set({
+            recipes: await fetchBeerRecipes(page),
+          });
         } catch (e) {
           set({ error: e.massage });
         } finally {
           set({ loading: false });
         }
       },
-      // changePage: () => {
-      //   set(state => {
-      //     const nextPage = state.page + 1;
-      //     return { page: nextPage };
-      //   });
-      // },
-
+      loadMoreRecipes: async () => {
+        set({ loading: true });
+        try {
+          const { page, recipes } = useBeerStore.getState();
+          const nextPage = page + 1;
+          const newRecipes = await fetchBeerRecipes(nextPage);
+          set({
+            recipes: [...recipes, ...newRecipes],
+            page: nextPage,
+          });
+        } catch (e) {
+          set({ error: e.massage });
+        } finally {
+          set({ loading: false });
+        }
+      },
       toggleBeerCards: id => {
         set(state => {
           if (state.selectedCard.includes(id)) {
