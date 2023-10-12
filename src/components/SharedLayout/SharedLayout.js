@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { Toaster } from 'react-hot-toast';
-import { Outlet } from 'react-router-dom';
+import { Outlet, Link } from 'react-router-dom';
 import { IoBeer } from 'react-icons/io5';
 
 import { GlobalStyle } from 'components/GlobalStyle';
@@ -11,7 +11,10 @@ const SharedLayout = () => {
   return (
     <Layout>
       <Header>
-        <IoBeer size="25" color="#ffffff" />
+        <Link to={'/'}>
+          {' '}
+          <IoBeer size="25" color="#ffffff" />
+        </Link>
       </Header>
       <Suspense fallback={<Spinner />}>
         <MainContainer>
