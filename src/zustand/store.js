@@ -4,9 +4,9 @@ import { devtools } from 'zustand/middleware';
 
 import { fetchBeerRecipes } from '../services/api';
 
-const useBeerStore = create()(
+const useBeerStore = create(
   devtools(
-    immer(set => ({
+    immer((set, get) => ({
       recipes: [],
       loading: false,
       error: null,
@@ -43,13 +43,12 @@ const useBeerStore = create()(
       },
       toggleBeerCards: id => {
         set(state => {
-          if (state.selectedCard.includes(id)) {
-            const { selectedCard } = state;
-
+          const { selectedCard } = state;
+          if (selectedCard.includes(id)) {
             const filteredId = selectedCard.filter(item => item !== id);
             return { selectedCard: filteredId };
           } else {
-            state.selectedCard.push(id);
+            selectedCard.push(id);
           }
         });
       },

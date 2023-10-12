@@ -1,22 +1,19 @@
 import { useEffect } from 'react';
 import useBeerStore from '../../zustand/store';
-import {
-  getRecipes,
-  getRecipesLength,
-  getLazyLoadBeer,
-  getLoadMoreRecipes,
-} from '../../zustand/selectors';
-// import { shallow } from 'zustand/shallow';
-// import { compare } from 'zustand/vanilla';
+import { shallow } from 'zustand/shallow';
 
 import RecipeCard from './RecipeCard';
 import { List } from './RecipesList.styled';
 
 const RecipesList = () => {
-  const recipes = useBeerStore(getRecipes);
-  const recipesLength = useBeerStore(getRecipesLength);
-  const lazyLoadBeer = useBeerStore(getLazyLoadBeer);
-  const loadMoreRecipes = useBeerStore(getLoadMoreRecipes);
+  const { recipes, lazyLoadBeer } = useBeerStore(
+    ({ recipes, lazyLoadBeer, loadMoreRecipes }) => ({
+      recipes,
+      lazyLoadBeer,
+      loadMoreRecipes,
+    }),
+    shallow
+  );
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,10 +31,6 @@ const RecipesList = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, [lazyLoadBeer]);
-
-  if (recipesLength <= 15) {
-    loadMoreRecipes();
-  }
 
   return (
     <List className="gallery">

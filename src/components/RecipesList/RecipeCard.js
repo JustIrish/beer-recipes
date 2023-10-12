@@ -1,19 +1,19 @@
 import { Link, useLocation } from 'react-router-dom';
-// import shallow from 'zustand/shallow';
+import { shallow } from 'zustand/shallow';
 
 import useBeerStore from '../../zustand/store';
-import {
-  getSelectedCard,
-  getToggleBeerCards,
-  getBeerRecipeById,
-} from '../../zustand/selectors';
 
 import { RecipeItem, CardWrap, Image, RecipeTitle } from './RecipesList.styled';
 
 const RecipeCard = ({ id, image_url, name }) => {
-  const selectedCard = useBeerStore(getSelectedCard);
-  const toggleBeerCards = useBeerStore(getToggleBeerCards);
-  const getRecipeById = useBeerStore(getBeerRecipeById);
+  const { selectedCard, toggleBeerCards, getRecipeById } = useBeerStore(
+    ({ selectedCard, toggleBeerCards, getRecipeById }) => ({
+      selectedCard,
+      toggleBeerCards,
+      getRecipeById,
+    }),
+    shallow
+  );
 
   const location = useLocation();
 
