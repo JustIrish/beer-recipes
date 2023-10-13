@@ -6,12 +6,11 @@ import { fetchBeerRecipes } from '../services/api';
 
 const useBeerStore = create(
   devtools(
-    immer((set, get) => ({
+    immer(set => ({
       recipes: [],
       loading: false,
       error: null,
       selectedCard: [],
-      selectedRecipe: {},
       page: 1,
       fetchRecipes: async page => {
         set({ loading: true });
@@ -55,7 +54,7 @@ const useBeerStore = create(
       lazyLoadBeer: () => {
         set(state => {
           const newRecipes = state.recipes.slice(5);
-          return { recipes: newRecipes };
+          return { recipes: newRecipes, selectedCard: [] };
         });
       },
       deleteRecipes: () => {
@@ -66,13 +65,6 @@ const useBeerStore = create(
             recipe => !selectedCard.includes(recipe.id)
           );
           return { recipes: filteredRecipes, selectedCard: [] };
-        });
-      },
-      getRecipeById: recipeId => {
-        set(state => {
-          const recipe = state.recipes.find(({ id }) => id === recipeId);
-
-          return { selectedRecipe: recipe };
         });
       },
     }))

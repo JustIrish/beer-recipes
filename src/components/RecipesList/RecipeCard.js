@@ -6,11 +6,10 @@ import useBeerStore from '../../zustand/store';
 import { RecipeItem, CardWrap, Image, RecipeTitle } from './RecipesList.styled';
 
 const RecipeCard = ({ id, image_url, name }) => {
-  const { selectedCard, toggleBeerCards, getRecipeById } = useBeerStore(
-    ({ selectedCard, toggleBeerCards, getRecipeById }) => ({
+  const { selectedCard, toggleBeerCards } = useBeerStore(
+    ({ selectedCard, toggleBeerCards }) => ({
       selectedCard,
       toggleBeerCards,
-      getRecipeById,
     }),
     shallow
   );
@@ -23,17 +22,12 @@ const RecipeCard = ({ id, image_url, name }) => {
     toggleBeerCards(id);
   };
 
-  const onHandleClick = () => {
-    getRecipeById(id);
-  };
-
   return (
     <RecipeItem
       style={{
         backgroundColor: selectedCard.includes(id) ? '#a6b7c9' : '#f2f3f7',
       }}
       onContextMenu={onHandleRightClick}
-      onClick={onHandleClick}
     >
       {' '}
       <Link to={`/${id}`} state={{ from: location }}>

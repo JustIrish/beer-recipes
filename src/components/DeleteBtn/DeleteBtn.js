@@ -1,13 +1,15 @@
+import { toast } from 'react-hot-toast';
+
 import useBeerStore from '../../zustand/store';
-import { getDeleteRecipes } from '../../zustand/selectors';
 
 import { Btn } from './DeleteBtn.styled';
 
 const DeleteBtn = () => {
-  const deleteRecipes = useBeerStore(getDeleteRecipes);
+  const { deleteRecipes } = useBeerStore();
 
   const onBtnClick = () => {
     deleteRecipes();
+    toast.success('Selected recipes successfully deleted!');
   };
 
   return (
